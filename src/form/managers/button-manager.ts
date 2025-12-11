@@ -146,7 +146,8 @@ export class ButtonManager extends BaseManager {
    */
   private buildItemData(item: ButtonItem): ButtonItem {
     const active = this.determineActive(item.element);
-    const visible = this.determineVisible(item.type);
+    // const visible = this.determineVisible(item.type);
+    const visible = true;
     const enabled = this.determineEnabled(item.type, active && visible);
 
     return {
@@ -196,15 +197,15 @@ export class ButtonManager extends BaseManager {
       .getByFilter((input) => input.active && input.isIncluded)
       .every((input) => input.isValid);
 
-    const { current, total } = this.getRelevantState();
+    // const { current, total } = this.getRelevantState();
 
     switch (type) {
       case 'prev':
         return activeAndVisible;
       case 'next':
-        return valid && current < total - 1;
+        return valid;
       case 'submit':
-        return valid && current === total - 1;
+        return valid;
     }
   }
 
