@@ -2,7 +2,7 @@
  * Navigation Events
  */
 export interface NavigationRequestEvent {
-  type: 'prev' | 'next';
+  type: 'prev' | 'next' | 'submit';
 }
 
 export interface NavigationChangedEvent {

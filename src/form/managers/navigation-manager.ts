@@ -109,10 +109,13 @@ export class NavigationManager extends BaseManager {
   /**
    * Handle move in a direction
    */
-  public handleMove(direction: 'prev' | 'next'): void {
+  public handleMove(direction: 'prev' | 'next' | 'submit'): void {
     if (!this.navigationEnabled) return;
 
-    const canMove = (direction === 'next' && this.validateCurrent()) || direction === 'prev';
+    const canMove =
+      (direction === 'next' && this.validateCurrent()) ||
+      (direction === 'submit' && this.validateCurrent()) ||
+      direction === 'prev';
     const behavior = this.form.getBehavior();
     const destination = behavior.toLowerCase().replace('by', '');
 
@@ -121,6 +124,11 @@ export class NavigationManager extends BaseManager {
     } else {
       this.logDebug(`Cannot navigate to ${direction} ${destination}`);
       this.form.emit('form:navigation:denied', { reason: 'invalid' });
+      return;
+    }
+
+    if (direction === 'submit') {
+      this.byCard('next');
       return;
     }
 
